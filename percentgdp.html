@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Analysis of Military, Healthcare, and Education Expenditure (% GDP)</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="pagestyle/pagestyle.css" title="style"/> <!-- Link to CSS file  -->
+
+  <!-- load google charts library -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+    google.charts.load('current',{'packages':['corechart']});
+    google.charts.setOnLoadCallback(allData);
+
+    // selecting sheets and columns in google spreadsheet from which to draw data
+    function allData() {
+      drawTableName('percentGDP', 'SELECT B,C,D,E,F,G,H,I,J,K', militaryPercentGDP);
+      drawTableName('percentGDP', 'SELECT M,N,O,P,Q,R,S,T,U,V', healthcarePercentGDP);
+      drawTableName('percentGDP', 'SELECT X,Y,Z,AA,AB,AC,AD,AE', educationPercentGDP);
+    }
+
+    // query google spreadsheet to draw chart
+    function drawTableName(tableName, query, responseHandler) {
+      var queryString = encodeURIComponent(query);
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1afhAT3OWL04wZnCraJvp5_r9i78p4bw96ON3b5CfzMk/gviz/tq?sheet=' +
+            tableName + '&headers=1&tq=' + queryString);
+      query.send(responseHandler);
+    }
+
+    // column chart of military expenditure as % of GDP
+    function militaryPercentGDP(response) {
+      var data = response.getDataTable();
+      data.sort({column:9, desc:true});
+      var options = {title: 'Military Expenditure as % GDP',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: '% GDP',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('militaryPercentGDP_div'));
+      chart.draw(data, options);
+    }
+
+    // column chart of healthcare expenditure as % of GDP
+    function healthcarePercentGDP(response) {
+      var data = response.getDataTable();
+      data.sort({column:9, desc:true});
+      var options = {title: 'Healthcare Expenditure as % GDP',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: '% GDP',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('healthcarePercentGDP_div'));
+      chart.draw(data, options);
+    }
+
+    // column chart of education expenditure as % of GDP
+    function educationPercentGDP(response) {
+      var data = response.getDataTable();
+      data.sort({column:7, desc:true});
+      var options = {title: 'Education Expenditure as % GDP',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: '% GDP',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('educationPercentGDP_div'));
+      chart.draw(data, options);
+    }
+
+  </script>
+</head>
+
+<body>
+  <div id="main"> <!-- main ID attribute -->
+    <div id="header"> <!-- header ID attribute -->
+      <div id="banner"> <!-- banner ID attribute, with page title -->
+        <h1>Military, Healthcare, and Education Expenditure:</h1>
+        <h1>Analysis and Comparison</h1>
+      </div>
+      <div id="menu"> <!-- menu ID attribute -->
+        <ul id="menuList"> <!-- unordered list -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="comparison.html">Comparison</a></li>
+          <li class="selected"><a href="percentgdp.html">% GDP</a></li> <!-- "selected" class attribute, indicating currently selected page -->
+          <li><a href="percapita.html">Per Capita</a></li>
+          <li><a href="growth.html">Growth</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content"> <!-- content ID attribute, containing the page's content and charts -->
+      <img src="pagestyle/banner.jpg" alt="Banner Image">
+      <h1>Expenditure as a Percentage of GDP</h1>
+      <p>A country's Gross Domestic Product (GDP) is the total monetary value of all final goods and services that were produced
+         in a given year. It is one of the most common indicators of a country's economic well-being, and therefore makes for a
+         good point of comparison for each country's military, healthcare, and education expenditure. Column charts can be seen
+         below showing military and healthcare expenditure as a percentage of GDP between the years of 2010-2018, and education
+         expenditure as a percentage of GDP between the years of 2010-2016.</p>
+
+      <h2>Military Expenditure as a Percentage of GDP</h2>
+      <div id="militaryPercentGDP_div" style="width: 1000px; height: 500px;"></div>
+
+      <h2>Healthcare Expenditure as a Percentage of GDP</h2>
+      <div id="healthcarePercentGDP_div" style="width: 1000px; height: 500px;"></div>
+
+      <h2>Education Expenditure as a Percentage of GDP</h2>
+      <div id="educationPercentGDP_div" style="width: 1000px; height: 500px;"></div>
+    </div>
+    <div id="footer"> <!-- author (with link to LinkedIn) and copyright date -->
+      <a href="http://www.linkedin.com/in/henrytappa/">HENRY TAPPA</a> | COPYRIGHT &copy; <script>var d = new Date(); document.write(d.getFullYear());</script>
+    </div>
+  </div>
+</body>
+
+</html>

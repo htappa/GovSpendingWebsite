@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Analysis of Military, Healthcare, and Education Expenditure (Growth)</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="pagestyle/pagestyle.css" title="style"/>  <!-- Link to CSS file  -->
+
+  <!-- load google charts library -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+    google.charts.load('current',{'packages':['corechart']});
+    google.charts.setOnLoadCallback(allData);
+
+    // selecting sheets and columns in google spreadsheet from which to draw data
+    function allData() {
+      drawTableName('expenditure', 'SELECT B,W', growthHealthcare);
+      drawTableName('expenditure', 'SELECT AG,AH', growthEducation);
+    }
+
+    // query google spreadsheet to draw chart
+    function drawTableName(tableName, query, responseHandler) {
+      var queryString = encodeURIComponent(query);
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1afhAT3OWL04wZnCraJvp5_r9i78p4bw96ON3b5CfzMk/gviz/tq?sheet=' +
+            tableName + '&headers=1&tq=' + queryString);
+      query.send(responseHandler);
+    }
+
+    // geo chart showing annual growth rate for healthcare expenditure ([2018spending] - [2010spending]) / [2010spending]
+    function growthHealthcare(response) {
+      var data = response.getDataTable();
+      data.sort({column: 1, desc:true});
+      var chart = new google.visualization.GeoChart(document.getElementById(
+            'growthHealthcare_div'));
+      var options = {backgroundColor: 'transparent',
+                     colorAxis: {colors: ['blue']}
+                     };
+      chart.draw(data, options);
+    }
+
+    // geo chart showing annual growth rate for education expenditure ([2014spending] - [2010spending]) / [2010spending]
+    function growthEducation(response) {
+      var data = response.getDataTable();
+      data.sort({column: 1, desc:true});
+      var chart = new google.visualization.GeoChart(document.getElementById(
+            'growthEducation_div'));
+      var options = {backgroundColor: 'transparent',
+                     colorAxis: {colors: ['blue']}
+                     };
+      chart.draw(data, options);
+    }
+
+  </script>
+</head>
+
+<body>
+  <div id="main"> <!-- main ID attribute -->
+    <div id="header"> <!-- header ID attribute -->
+      <div id="banner"> <!-- banner ID attribute, with page title -->
+        <h1>Military, Healthcare, and Education Expenditure:</h1>
+        <h1>Analysis and Comparison</h1>
+      </div>
+      <div id="menu"> <!-- menu ID attribute -->
+        <ul id="menuList"> <!-- unordered list -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="comparison.html">Comparison</a></li>
+          <li><a href="percentgdp.html">% GDP</a></li>
+          <li><a href="percapita.html">Per Capita</a></li>
+          <li class="selected"><a href="growth.html">Growth</a></li> <!-- "selected" class attribute, indicating currently selected page -->
+        </ul>
+      </div>
+    </div>
+    <div id="content"> <!-- content ID attribute, containing the page's content and charts -->
+      <img src="pagestyle/banner.jpg" alt="Banner Image">
+      <h1>Fastest Growing Countries: Healthcare and Education Expenditure</h1>
+      <p>Annual growth is an important measurement for a country's economy, and this section focuses on the growth of
+         healthcare and education expenditure for each of the eleven countries over a period of nine years for healthcare
+         expenditure and five years for education expenditure. The tables show each country's annual growth in terms of
+         fixed value and percentage, and the interactive maps show percentage growth, with lighter shades of blue
+         representing lower growth and darker shades of blue representing higher growth.</p>
+
+      <h2>Fastest Growing Countries in Healthcare Expenditure (2010-2018)</h2>
+      <table id="healthcareTable"> <!-- table showing annual growth for healthcare in both fixed value and % -->
+        <tr>
+          <th>Country</th>
+          <th>Annual Growth: Fixed Value (USD Millions)</th>
+          <th>Annual Growth: Percentage</th>
+        </tr>
+        <tr>
+          <td>Australia</td>
+          <td>$46,000</td>
+          <td>58%</td>
+        </tr>
+        <tr>
+          <td>Canada</td>
+          <td>$42,062</td>
+          <td>30%</td>
+        </tr>
+        <tr>
+          <td>France</td>
+          <td>$69,867</td>
+          <td>27%</td>
+        </tr>
+        <tr>
+          <td>Germany</td>
+          <td>$141,423</td>
+          <td>40%</td>
+        </tr>
+        <tr>
+          <td>Italy</td>
+          <td>$23,380</td>
+          <td>13%</td>
+        </tr>
+        <tr>
+          <td>Japan</td>
+          <td>$195,488</td>
+          <td>48%</td>
+        </tr>
+        <tr>
+          <td>Korea</td>
+          <td>$71,145</td>
+          <td>76%</td>
+        </tr>
+        <tr>
+          <td>Mexico</td>
+          <td>$34,495</td>
+          <td>33%</td>
+        </tr>
+        <tr>
+          <td>Turkey</td>
+          <td>$37,442</td>
+          <td>61%</td>
+        </tr>
+        <tr>
+          <td>United Kingdom</td>
+          <td>$89,530</td>
+          <td>50%</td>
+        </tr>
+        <tr>
+          <td>United States</td>
+          <td>$1,015,146</td>
+          <td>41%</td>
+        </tr>
+      </table>
+
+      <div id="growthHealthcare_div" style="width:1000px; height:500px;"></div> <!-- geo chart for healthcare -->
+
+      <h2>Fastest Growing Countries in Education Expenditure (2010-2014)</h2>
+      <table id="educationTable"> <!-- table showing annual growth for education in both fixed value and % -->
+        <tr>
+          <th>Country</th>
+          <th>Annual Growth: Fixed Value (USD Millions)</th>
+          <th>Annual Growth: Percentage</th>
+        </tr>
+        <tr>
+          <td>Australia</td>
+          <td>$12,181</td>
+          <td>19%</td>
+        </tr>
+        <tr>
+          <td>France</td>
+          <td>$6,782</td>
+          <td>5%</td>
+        </tr>
+        <tr>
+          <td>Germany</td>
+          <td>$23,946</td>
+          <td>14%</td>
+        </tr>
+        <tr>
+          <td>Italy</td>
+          <td>$(4,802)</td>
+          <td>-5%</td>
+        </tr>
+        <tr>
+          <td>Mexico</td>
+          <td>$14,580</td>
+          <td>27%</td>
+        </tr>
+        <tr>
+          <td>United Kingdom</td>
+          <td>$18,489</td>
+          <td>13%</td>
+        </tr>
+        <tr>
+          <td>United States</td>
+          <td>$51,323</td>
+          <td>7%</td>
+        </tr>
+      </table>
+
+      <div id="growthEducation_div" style="width:1000px; height:500px;"></div> <!-- geo chart for education-->
+    </div>
+    <div id="footer"> <!-- author (with link to LinkedIn) and copyright date -->
+      <a href="http://www.linkedin.com/in/henrytappa/">HENRY TAPPA</a> | COPYRIGHT &copy; <script>var d = new Date(); document.write(d.getFullYear());</script>
+    </div>
+  </div>
+</body>
+
+</html>

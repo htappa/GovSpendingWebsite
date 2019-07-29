@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Analysis of Military, Healthcare, and Education Expenditure (Comparison)</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="pagestyle/pagestyle.css" title="style"/> <!-- Link to CSS file  -->
+
+  <!-- load google charts library -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+    google.charts.load('current',{'packages':['corechart']});
+    google.charts.setOnLoadCallback(allData);
+
+    // selecting sheets and columns in google spreadsheet from which to draw data
+    function allData() {
+      drawTableName('bubble', 'SELECT A,B,C,D,E', bubbleMilitaryHealth);
+      drawTableName('bubble', 'SELECT A,F,G,D,H', bubbleMilitaryEducation);
+    }
+
+    // query google spreadsheet to draw chart
+    function drawTableName(tableName, query, responseHandler) {
+      var queryString = encodeURIComponent(query);
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1afhAT3OWL04wZnCraJvp5_r9i78p4bw96ON3b5CfzMk/gviz/tq?sheet=' +
+            tableName + '&headers=1&tq=' + queryString);
+      query.send(responseHandler);
+    }
+
+    // bubble chart comparing Military and Health expenditure
+    function bubbleMilitaryHealth(response) {
+      var data = response.getDataTable();
+      data.sort({column:3, desc:true});
+      var options = {title: 'Military Expenditure Compared to Healthcare Expenditure (2018)',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '80%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: 'Healthcare Expenditure, Current USD (LN)',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                            },
+                     hAxis: {title: 'Military Expenditure, Current USD (LN)',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                            },
+                     bubble: {textStyle: {fontSize: 11, color: '#414141'}},
+                     sizeAxis: {minValue: 5,  maxSize: 50},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}},
+                     };
+      var chart = new google.visualization.BubbleChart(
+            document.getElementById('bubbleMilitaryHealth_div'));
+      chart.draw(data, options);
+    }
+
+    // bubble chart comparing Military and Education expenditure
+    function bubbleMilitaryEducation(response) {
+      var data = response.getDataTable();
+      data.sort({column:3, desc:true});
+      var options = {title: 'Military Expenditure Compared to Education Expenditure (2014)',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '80%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: 'Education Expenditure, Current USD (LN)',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Military Expenditure, Current USD (LN)',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     bubble: {textStyle: {fontSize: 11, color: '#414141'}},
+                     sizeAxis: {minValue: 5,  maxSize: 50},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}},
+                     };
+     var chart = new google.visualization.BubbleChart(
+          document.getElementById('bubbleMilitaryEducation_div'));
+     chart.draw(data, options);
+  }
+
+  </script>
+</head>
+
+<body>
+  <div id="main"> <!-- main ID attribute -->
+    <div id="header"> <!-- header ID attribute -->
+      <div id="banner"> <!-- banner ID attribute, with page title -->
+        <h1>Military, Healthcare, and Education Expenditure:</h1>
+        <h1>Analysis and Comparison</h1>
+      </div>
+      <div id="menu"> <!-- menu ID attribute -->
+        <ul id="menuList"> <!-- unordered list -->
+          <li><a href="index.html">Home</a></li>
+          <li class="selected"><a href="comparison.html">Comparison</a></li> <!-- "selected" class attribute, indicating currently selected page -->
+          <li><a href="percentgdp.html">% GDP</a></li>
+          <li><a href="percapita.html">Per Capita</a></li>
+          <li><a href="growth.html">Growth</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content"> <!-- content ID attribute, containing the page's content and charts -->
+      <img src="pagestyle/banner.jpg" alt="Banner Image">
+      <h1>Military Expenditure Compared to Healthcare and Education Expenditure</h1>
+      <p>Military expenditure is often a major portion of a country's budget. The bubble charts shown below visualize
+         military expenditure as it relates to both healthcare and education expenditure, taking into account each country's
+         population and region (Oceania, North America, Europe, Asia). Because US spending in all three categories is
+         considerably higher than the other countries, the values for military, healthcare, and education expenditure in these
+         charts are displayed using the natural logarithm (LN) of the spending values.</p>
+
+      <h2>Military Expenditure and Healthcare Expenditure</h2>
+      <div id="bubbleMilitaryHealth_div" style="width: 1000px; height: 600px;"></div>
+
+      <h2>Military Expenditure and Education Expenditure</h2>
+      <div id="bubbleMilitaryEducation_div" style="width: 1000px; height: 600px;"></div>
+    </div>
+    <div id="footer"> <!-- author (with link to LinkedIn) and copyright date -->
+      <a href="http://www.linkedin.com/in/henrytappa/">HENRY TAPPA</a> | COPYRIGHT &copy; <script>var d = new Date(); document.write(d.getFullYear());</script>
+    </div>
+  </div>
+</body>
+
+</html>

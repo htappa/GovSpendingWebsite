@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Analysis of Military, Healthcare, and Education Expenditure (Per Capita)</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="pagestyle/pagestyle.css" title="style"/> <!-- Link to CSS file  -->
+
+  <!-- load google charts library -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+    google.charts.load('current',{'packages':['corechart']});
+    google.charts.setOnLoadCallback(allData);
+
+    // selecting sheets and columns in google spreadsheet from which to draw data
+    function allData() {
+      drawTableName('perCapita', 'SELECT B,C,D,E,F,G,H,I,J,K', gdpPerCapita);
+      drawTableName('perCapita', 'SELECT M,N,O,P,Q,R,S,T,U,V', militaryPerCapita);
+      drawTableName('perCapita', 'SELECT X,Y,Z,AA,AB,AC,AD,AE,AF,AG', healthcarePerCapita);
+      drawTableName('perCapita', 'SELECT AI,AJ,AK,AL,AM,AN,AO,AP', educationPerCapita);
+      drawTableName('perCapita', 'SELECT B,AR,AS', gdpMilitaryPerCapita);
+      drawTableName('perCapita', 'SELECT B,AR,AT', gdpHealthcarePerCapita);
+      drawTableName('perCapita', 'SELECT B,AR,AU', gdpEducationPerCapita);
+    }
+
+    // query google spreadsheet to draw chart
+    function drawTableName(tableName, query, responseHandler) {
+      var queryString = encodeURIComponent(query);
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1afhAT3OWL04wZnCraJvp5_r9i78p4bw96ON3b5CfzMk/gviz/tq?sheet=' +
+            tableName + '&headers=1&tq=' + queryString);
+      query.send(responseHandler);
+    }
+
+    // column chart of GDP per capita
+    function gdpPerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:9, desc:true});
+      var options = {title: 'GDP Per Capita',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: 'Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                            },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('gdpPerCapita_div'));
+      chart.draw(data, options);
+    }
+
+    // column chart of military expenditure per capita
+    function militaryPerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:9, desc:true});
+      var options = {title: 'Military Expenditure Per Capita',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: 'Expenditure Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                     },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('militaryPerCapita_div'));
+      chart.draw(data, options);
+    }
+
+    // stacked column chart showing military expenditure per capita compared to GDP per capita for 2018
+    function gdpMilitaryPerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:1, desc: true});
+
+      var options = {chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     legend: {position: 'right', maxLines: 2},
+                     bars: 'horizontal',
+                     isStacked: true,
+                     annotations: {alwaysOutside: true},
+                     title: 'Military Expenditure Per Capita Compared to GDP Per Capita (2018)',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     vAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Expenditure Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                           },
+                      legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.BarChart(document.getElementById(
+            'gdpMilitaryPerCapita_div'));
+      chart.draw(data, options);
+    }
+
+    // column chart of healthcare expenditure per capita
+    function healthcarePerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:9, desc:true});
+      var options = {title: 'Healthcare Expenditure Per Capita',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: 'Expenditure Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('healthcarePerCapita_div'));
+      chart.draw(data, options);
+    }
+
+    // stacked column chart showing healthcare expenditure per capita compared to GDP per capita for 2018
+    function gdpHealthcarePerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:1, desc: true});
+
+      var options = {chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     legend: {position: 'right', maxLines: 2},
+                     bars: 'horizontal',
+                     isStacked: true,
+                     annotations: {alwaysOutside: true},
+                     title: 'Healthcare Expenditure Per Capita Compared to GDP Per Capita (2018)',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     vAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Expenditure Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                           },
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.BarChart(document.getElementById(
+            'gdpHealthcarePerCapita_div'));
+      chart.draw(data, options);
+    }
+
+    // column chart of education expenditure per capita
+    function educationPerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:7, desc:true});
+      var options = {title: 'Education Expenditure Per Capita',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     vAxis: {title: 'Expenditure Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                     },
+                     hAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'},
+                             direction: -1,
+                             slantedText: true,
+                             slantedTextAngle: 45},
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.ColumnChart(
+            document.getElementById('educationPerCapita_div'));
+      chart.draw(data, options);
+    }
+
+    // stacked column chart showing education expenditure per capita compared to GDP per capita for 2014
+    function gdpEducationPerCapita(response) {
+      var data = response.getDataTable();
+      data.sort({column:1, desc: true});
+
+      var options = {chartArea: {'height': '70%'},
+                     backgroundColor: 'transparent',
+                     legend: {position: 'right', maxLines: 2},
+                     bars: 'horizontal',
+                     isStacked: true,
+                     annotations: {alwaysOutside: true},
+                     title: 'Education Expenditure Per Capita Compared to GDP Per Capita (2014)',
+                     titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                     vAxis: {title: 'Country',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                             },
+                     hAxis: {title: 'Expenditure Per Capita, Current USD',
+                             titleTextStyle: {fontSize: 13, bold: true, color: '#686868'},
+                             textStyle: {fontSize: 11, color: '#686868'}
+                           },
+                     legend: {fontSize: 11, textStyle: {color: '#686868'}
+                              }
+                     };
+      var chart = new google.visualization.BarChart(document.getElementById(
+            'gdpEducationPerCapita_div'));
+      chart.draw(data, options);
+    }
+
+  </script>
+</head>
+
+<body>
+  <div id="main"> <!-- main ID attribute -->
+    <div id="header"> <!-- header ID attribute -->
+      <div id="banner"> <!-- banner ID attribute, with page title -->
+        <h1>Military, Healthcare, and Education Expenditure:</h1>
+        <h1>Analysis and Comparison</h1>
+      </div>
+      <div id="menu"> <!-- menu ID attribute -->
+        <ul id="menuList"> <!-- unordered list -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="comparison.html">Comparison</a></li>
+          <li><a href="percentgdp.html">% GDP</a></li>
+          <li class="selected"><a href="percapita.html">Per Capita</a></li> <!-- "selected" class attribute, indicating currently selected page -->
+          <li><a href="growth.html">Growth</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content"> <!-- content ID attribute, containing the page's content and charts -->
+      <img src="pagestyle/banner.jpg" alt="Banner Image">
+      <h1>Expenditure Per Capita</h1>
+      <p>This section includes visualizations detailing the per capita expenditure for each of the eleven countries, starting
+         off with GDP per capita and then moving on to three different subsections for military, healthcare, and education. Each
+         of these subsections shows column chart visualizations for per capita expenditure, as well as a stacked column chart
+         showing per capita expenditure compared to GDP per capita in 2018, or 2014 in the case of education expenditure.</p>
+
+      <h2>GDP Per Capita</h2>
+      <div id="gdpPerCapita_div" style="width:1000px; height:500px;"></div>
+
+      <h2>Military Expenditure Per Capita Compared to GDP Per Capita</h2>
+      <div id="militaryPerCapita_div" style="width:1000px; height:500px;"></div>
+      <div id="gdpMilitaryPerCapita_div" style="width:1000px; height:500px;"></div>
+
+      <h2>Healthcare Expenditure Per Capita Compared to GDP Per Capita</h2>
+      <div id="healthcarePerCapita_div" style="width:1000px; height:500px;"></div>
+      <div id="gdpHealthcarePerCapita_div" style="width:1000px; height:500px;"></div>
+
+      <h2>Education Expenditure Per Capita Compared to GDP Per Capita</h2>
+      <div id="educationPerCapita_div" style="width:1000px; height:500px;"></div>
+      <div id="gdpEducationPerCapita_div" style="width:1000px; height:500px;"></div>
+    </div>
+    <div id="footer"> <!-- author (with link to LinkedIn) and copyright date -->
+      <a href="http://www.linkedin.com/in/henrytappa/">HENRY TAPPA</a> | COPYRIGHT &copy; <script>var d = new Date(); document.write(d.getFullYear());</script>
+    </div>
+  </div>
+</body>
+
+</html>
