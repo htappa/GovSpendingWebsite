@@ -1,0 +1,179 @@
+/* General formatting for the html files */
+
+body {
+	font: normal 80% arial;
+	background: #A0A0A0;
+	color: #686868;
+}
+
+p {
+	line-height: 175%;
+}
+
+h1 {
+	font: normal 220% arial;
+	color: #686868;
+	padding: 15px 0 0 0;
+}
+
+h2 {
+	font: normal 150% arial;
+	color: #686868;
+	padding: 15px 0 0 0;
+}
+
+img {
+	width: 100%;
+}
+
+/* Formatting for ID attributes, which take the following structure:
+	  main
+			header
+				banner
+				menu
+					menuList
+			content
+			footer
+*/
+
+#main, #header, #banner, #menu, #menuList, #content, #footer {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#main {
+	width: 1000px;
+}
+
+#header {
+	width: 1000px;
+}
+
+#banner {
+	padding: 0 20px 20px 20px;
+	width: 1000px;
+	height: 155px;
+	background: #414141;
+	font: normal 80% arial;
+	left: 30px;
+}
+
+#banner h1 {
+	font: normal 320% arial;
+	color: #DADADA;
+	text-transform: none;
+	margin: 0 0 0 0;
+	padding: 15px 0 0 0;
+	letter-spacing: 0.07em;
+	text-decoration: none;
+}
+
+#menu {
+	width: 1000px;
+	height: 35px;
+	padding: 10px 0 0 0;
+	margin: -50px 0 0 0;
+	float: left;
+}
+
+/* Formatting for unordered list within the menu */
+
+ul#menuList {
+	margin: 0 0 0 0;
+}
+
+ul#menuList li {
+	margin: 5px 0 0 0;
+	float: left;
+	padding: 0 10px 0 10px;
+	list-style: none;
+}
+
+ul#menuList li a {
+	font: normal 110% arial;
+	float: left;
+	height: 20px;
+	text-decoration: none;
+	padding: 9px 22px 5px 16px;
+	text-align: center;
+	color: #DADADA;
+}
+
+/* Specific formatting for "selected" class attribute */
+
+ul#menuList li.selected {
+	margin: 7px 0 0 0;
+	background: #E1EDFF;
+}
+
+ul#menuList li.selected a {
+	height: 25px;
+	color: #414141;
+	padding: 7px 22px 5px 16px;
+}
+
+/* Specific formatting for content */
+
+#content {
+	text-align: left;
+	width: 1000px;
+	background: #E1EDFF;
+	float: left;
+	padding: 20px 20px 100px 20px;
+}
+
+/* Formatting for lists within content */
+
+ul#categoryList {
+	line-height: 175%;
+	list-style: square;
+}
+
+ol#citationList {
+	line-height: 175%;
+}
+
+/* Formatting for healthcare and education tables */
+
+#healthcareTable {
+	font-family: arial;
+  border-collapse: collapse;
+  width: 58%;
+	margin: 0 0 20px 0;
+}
+
+#educationTable {
+	font-family: arial;
+  border-collapse: collapse;
+  width: 58%;
+	margin: 0 0 20px 0;
+}
+
+td, th {
+  border: 1px solid #DADADA;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #DADADA;
+}
+
+/* Specific formatting for footer */
+
+#footer {
+	width: 1000px;
+	height: 30px;
+	overflow: hidden;
+	padding: 20px 20px 2px 20px;
+	text-align: center;
+	background: #414141;
+	color: #DADADA;
+	letter-spacing: 20%;
+	font-size: 80%;
+}
+
+#footer a {
+	color: #DADADA;
+	text-decoration: none;
+}
